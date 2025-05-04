@@ -1,0 +1,17 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+@import "tailwindcss";
+body {
+  font-family: "Montserrat", sans-serif;
+}
+.side-bar {
+  animation: slideIn linear 1s ease-in-out;
+}
+/* animation */
+@keyframes slideIn {
+  from {
+    transform: translateX(-100px);
+  }
+  to {
+    transform: translateX(0);
+  }
+}

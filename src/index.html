@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link href="./output.css" rel="stylesheet" />
+    <link href="src/input.css" rel="stylesheet" />
+  </head>
+  <body class="bg-[#f5f5f5]">
+    <!-- body -->
+    <div class="container p-5 w-screen relative min-h-screen">
+      <!-- search bar -->
+      <header class="relative w-[100%] mx-auto">
+        <i
+          class="fa-solid fa-bars absolute text-xl left-[7%] top-[36%] cursor-pointer"
+          id="side-bar-btn"
+        ></i>
+        <input
+          type="text"
+          name="search"
+          id="search"
+          placeholder="Search notes..."
+          class="bg-[#e8e8e9] pl-13 w-full pr-2 py-4 rounded-full text-lg focus:outline-0"
+        />
+        <i
+          class="fa-solid fa-bell absolute text-2xl right-[7%] top-[36%] cursor-pointer"
+        ></i>
+      </header>
+      <!-- side bar -->
+      <aside
+        id="side-bar"
+        class="min-h-screen w-5/6 absolute top-0 left-0 z-50 bg-[#e8e8e9] px-5 py-7 hidden"
+      >
+        <div
+          class="border-b-[1px] border-neutral-400 flex justify-between items-center w-full"
+        >
+          <h1 class="text-2xl font-bold py-2">Todos</h1>
+          <i class="fa-solid fa-xmark text-lg" id="remove-aside"></i>
+        </div>
+
+        <div class="flex flex-col gap-5 mt-5">
+          <div id="all-task">
+            <i class="fa-solid fa-list-check pr-3 text-lg"></i>
+            <span>All tasks</span>
+          </div>
+          <div id="completed">
+            <i class="fa-solid fa-check-to-slot pr-3 text-lg"></i>
+            <span>Completed</span>
+          </div>
+          <div id="incomplete">
+            <i class="fa-solid fa-chart-simple pr-3 text-lg"></i
+            ><span>Incomplete</span>
+          </div>
+          <!-- <div id="bin">
+            <i class="fa-regular fa-trash-can pr-3 text-lg"></i><span>Bin</span>
+          </div> -->
+        </div>
+      </aside>
+      <!-- add feature -->
+      <div
+        id="add-note"
+        class="bg-[#e8e8e9] p-4 rounded-xl shadow-lg fixed bottom-10 right-10 cursor-pointer z-40"
+      >
+        <i class="fa-solid fa-plus mr-2"></i><span>Add note</span>
+      </div>
+      <!-- notes container -->
+      <div id="todo-list-app" class="py-5"></div>
+      <div id="modal-backdrop" class="fixed inset-0 bg-[#e8e8e9] z-40 hidden">
+        <!-- note modal -->
+        <div
+          id="note-modal"
+          class="fixed bg-[#fff] z-50 w-4/5 h-auto shadow-2xl rounded-2xl mx-auto top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 pt-15 px-3 pb-3 hidden"
+        >
+          <div
+            id="create-note"
+            class="border-[1px] border-[#e8e8e9] rounded-full inline px-2.5 py-1 absolute top-2 right-2 cursor-pointer"
+          >
+            <i class="fa-solid fa-check"></i>
+          </div>
+          <div>
+            <!-- modal title input field -->
+            <input
+              type="text"
+              name="title"
+              id="note-title"
+              placeholder="Title"
+              class="focus:outline-0 w-full"
+            />
+            <div>
+              <span>2 May 10:26 | 0 characters</span>
+            </div>
+            <div>
+              <textarea
+                name="text-"
+                id="text-area"
+                placeholder="Write notes"
+                class="min-h-44 w-full focus:outline-0"
+              ></textarea>
+            </div>
+          </div>
+          <!-- text styling -->
+          <div></div>
+        </div>
+      </div>
+    </div>
+    <script src="/script.js"></script>
+  </body>
+</html>
