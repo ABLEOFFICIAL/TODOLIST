@@ -357,9 +357,6 @@
     border-bottom-style: var(--tw-border-style);
     border-bottom-width: 1px;
   }
-  .border-\[\#4ade80\] {
-    border-color: #4ade80;
-  }
   .border-\[\#e8e8e9\] {
     border-color: #e8e8e9;
   }
@@ -371,9 +368,6 @@
   }
   .border-neutral-600 {
     border-color: var(--color-neutral-600);
-  }
-  .bg-\[\#4ade80\] {
-    background-color: #4ade80;
   }
   .bg-\[\#e8e8e9\] {
     background-color: #e8e8e9;

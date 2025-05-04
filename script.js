@@ -50,10 +50,11 @@ document.addEventListener("click", function (event) {
 // display all todos
 const todoListApp = document.getElementById("todo-list-app");
 let todoList;
+let completedTodos;
 
 // fetch data
 const fetchData = () => {
-  fetch("https://jsonplaceholder.typicode.com/todos")
+  fetch("http://localhost:3000/todos")
     .then((res) => res.json())
     .then((data) => {
       todoList = data;
@@ -62,51 +63,73 @@ const fetchData = () => {
 };
 fetchData();
 
-function checkTask(id) {
+// complete a task
+todoListApp.addEventListener("click", function (e) {
+  const li = e.target.closest("div");
   todoList.map((todo) => {
-    if (todo.id === id) {
+    if (li.dataset.id == todo.id) {
       updateList(todo);
     }
   });
-}
+});
 
 function updateList(todo) {
-  fetch(`http://localhost:2000/todos/${todo.id}`, {
+  fetch(`http://localhost:3000/todos/${todo.id}`, {
     method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
     body: JSON.stringify({
+      userId: todo.userId,
       id: todo.id,
       title: todo.title,
       completed: !todo.completed,
     }),
-  });
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      retrieve(data);
+    });
+  removeCompleted();
 }
 
 // function to get data
 const retrieve = (datas) => {
   datas.map((data) => {
     todoListApp.innerHTML += `
-        <div class="bg-[#fff] p-4 rounded-xl shadow-lg w-full h-1/6 mb-4 relative flex justify-between items-center">
+        <div data-id="${
+          data.id
+        }" class="bg-[#fff] p-4 rounded-xl shadow-lg w-full h-1/6 mb-4 relative flex justify-between items-center">
           ${
             !data.completed
-              ? `<span onclick="checkTask(${data.id})" id="check" class="w-[6%] h-5 border-2 border-gray-400 rounded-md cursor-pointer"></span>`
+              ? `<span id="check" class="w-[6%] h-5 border-2 border-gray-400 rounded-md cursor-pointer"></span>`
               : `<span><i class="fa-solid fa-check border-2 rounded border-neutral-600 text-xs p-1"></i></span>`
           }
           <div class="w-[88%]">
-            <h3 class="font-semibold text-sm">${data.title}</h3>
+          ${
+            data.completed
+              ? `<del><h3 class="font-semibold text-sm">${data.title}</h3>
             <p class="text-neutral-500 text-xs">Lorem ipsum dolor sit amet.</p>
-            <span class="text-neutral-400 text-xs">may 2</span>
+            <span class="text-neutral-400 text-xs">may 2</span></del>`
+              : `<h3 class="font-semibold text-sm">${data.title}</h3>
+            <p class="text-neutral-500 text-xs">Lorem ipsum dolor sit amet.</p>
+            <span class="text-neutral-400 text-xs">may 2</span>`
+          }
           </div>
           </div>
         `;
-    // check todo
-    const check = document.querySelectorAll("#check");
-    check.forEach((item) => {
-      item.addEventListener("click", function (e) {
-        data.completed = !data.completed;
-      });
-    });
   });
 };
+
+// filter completed todos
+function removeCompleted() {
+  console.log("hello completed");
+
+  todoList.filter((todo) => {
+    todo.completed === true;
+    console.log(todo);
+  });
+}
 
 // add a new list
 function createNote(title, content, completed) {
@@ -141,7 +164,7 @@ let textArea = document.getElementById("text-area");
 create.addEventListener("click", function () {
   if (noteTitle.value !== "" || textArea.value !== "") {
     createNote(noteTitle.value, textArea.value, false);
-    fetch("https://jsonplaceholder.typicode.com/todos", {
+    fetch("http://localhost:3000/todos", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
