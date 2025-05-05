@@ -56,7 +56,7 @@ let completedTodos;
 
 // fetch data
 const fetchData = () => {
-  fetch(`${apiUrl}/data/todoList.json`)
+  fetch(`${apiUrl}`)
     .then((res) => res.json())
     .then((data) => {
       todoList = data;
@@ -85,7 +85,7 @@ todoListApp.addEventListener("click", function (e) {
 });
 
 function updateList(todo) {
-  fetch(`${apiUrl}/todos/${todo.id}`, {
+  fetch(`${apiUrl}/${todo.id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -151,7 +151,7 @@ const retrieve = (datas) => {
 
 // delete request
 function deleteTodo(todo) {
-  fetch(`${apiUrl}/todos/${todo.id}`, {
+  fetch(`${apiUrl}/${todo.id}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
@@ -260,7 +260,7 @@ timeCreated.textContent = `${date.getDate()} ${
 create.addEventListener("click", function () {
   if (noteTitle.value !== "" || textArea.value !== "") {
     createNote(noteTitle.value, textArea.value, false);
-    fetch(`${apiUrl}/todos`, {
+    fetch(`${apiUrl}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
