@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "start": "json-server --watch db.json --port 10000 --no-static"
+    "start": "json-server --watch db.json --port 10000"
   },
   "dependencies": {
     "@tailwindcss/cli": "^4.1.5",
