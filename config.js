@@ -6,7 +6,7 @@ const CONFIG = {
     API_URL: "http://localhost:3000",
   },
   production: {
-    API_URL: "https://yourdomain.com/api",
+    API_URL: "https://todolist-tau-ten-74.vercel.app/",
   },
 };
 

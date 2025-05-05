@@ -1,9 +1,3 @@
-const apiUrl = window.APP_CONFIG.API_URL;
-
-fetch(`${apiUrl}/todos`)
-  .then((res) => res.json())
-  .then((data) => console.log(data))
-  .catch((err) => console.error("Error fetching:", err));
 // toggle side bar
 const sideBarBtn = document.getElementById("side-bar-btn");
 const sideBar = document.getElementById("side-bar");
