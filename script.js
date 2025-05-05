@@ -59,7 +59,12 @@ const fetchData = () => {
   fetch(`${apiUrl}`)
     .then((res) => res.json())
     .then((data) => {
-      todoList = data;
+      if (window.APP_CONFIG.ENV === "http://localhost:3000/todos") {
+        todoList = data;
+      } else {
+        todoList = data.todos;
+      }
+      // todoList = data;
       retrieve(todoList);
     });
 };
