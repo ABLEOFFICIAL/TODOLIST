@@ -56,7 +56,7 @@ let completedTodos;
 
 // fetch data
 const fetchData = () => {
-  fetch(`${apiUrl}/todos.json`)
+  fetch(`${apiUrl}/data/todoList.json`)
     .then((res) => res.json())
     .then((data) => {
       todoList = data;
