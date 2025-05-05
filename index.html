@@ -17,6 +17,7 @@
     <!-- body -->
     <div class="container p-5 w-screen relative min-h-screen">
       <!-- search bar -->
+      <h1 class="font-bold text-3xl py-3">To-Do-List</h1>
       <header class="relative w-[100%] mx-auto">
         <i
           class="fa-solid fa-bars absolute text-xl left-[7%] top-[36%] cursor-pointer"
@@ -27,11 +28,8 @@
           name="search"
           id="search"
           placeholder="Search notes..."
-          class="bg-[#e8e8e9] pl-13 w-full pr-2 py-4 rounded-full text-lg focus:outline-0"
+          class="bg-[#e8e8e9] pl-13 w-full pr-2 py-4 rounded-full text-md focus:outline-0"
         />
-        <i
-          class="fa-solid fa-bell absolute text-2xl right-[7%] top-[36%] cursor-pointer"
-        ></i>
       </header>
       <!-- side bar -->
       <aside
@@ -46,15 +44,15 @@
         </div>
 
         <div class="flex flex-col gap-5 mt-5">
-          <div id="all-task">
+          <div id="all-task" class="">
             <i class="fa-solid fa-list-check pr-3 text-lg"></i>
             <span>All tasks</span>
           </div>
-          <div id="completed">
+          <div id="completed" class="tasks">
             <i class="fa-solid fa-check-to-slot pr-3 text-lg"></i>
             <span>Completed</span>
           </div>
-          <div id="incomplete">
+          <div id="incomplete" class="tasks">
             <i class="fa-solid fa-chart-simple pr-3 text-lg"></i
             ><span>Incomplete</span>
           </div>
@@ -94,7 +92,7 @@
               class="focus:outline-0 w-full"
             />
             <div>
-              <span>2 May 10:26 | 0 characters</span>
+              <span class="timeCreated"></span>
             </div>
             <div>
               <textarea

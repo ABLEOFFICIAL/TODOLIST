@@ -4,7 +4,6 @@ const sideBar = document.getElementById("side-bar");
 let startX = 0; // variable to store the initial touch position
 sideBarBtn.addEventListener("click", function () {
   sideBar.classList.remove("hidden");
-  console.log("hekkoo");
 });
 
 // add touch event listeners to the side bar
@@ -65,12 +64,21 @@ fetchData();
 
 // complete a task
 todoListApp.addEventListener("click", function (e) {
-  const li = e.target.closest("div");
-  todoList.map((todo) => {
-    if (li.dataset.id == todo.id) {
-      updateList(todo);
-    }
-  });
+  if (e.target.classList.contains("check-list")) {
+    const li = e.target.closest("div");
+    todoList.map((todo) => {
+      if (li.dataset.id == todo.id) {
+        updateList(todo);
+      }
+    });
+  } else if (e.target.classList.contains("del-list")) {
+    const li = e.target.closest("div");
+    todoList.map((todo) => {
+      if (li.dataset.id == todo.id) {
+        deleteTodo(todo);
+      }
+    });
+  }
 });
 
 function updateList(todo) {
@@ -90,20 +98,35 @@ function updateList(todo) {
     .then((data) => {
       retrieve(data);
     });
-  removeCompleted();
 }
 
 // function to get data
+const date = new Date();
+let monthNames = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+console.log(date); // 0-11
 const retrieve = (datas) => {
   datas.map((data) => {
     todoListApp.innerHTML += `
         <div data-id="${
           data.id
-        }" class="bg-[#fff] p-4 rounded-xl shadow-lg w-full h-1/6 mb-4 relative flex justify-between items-center">
+        }" class="bg-[#fff] p-4 rounded-xl shadow-lg w-full h-1/6 mb-4 relative flex gap-14 justify-between items-center">
           ${
             !data.completed
-              ? `<span id="check" class="w-[6%] h-5 border-2 border-gray-400 rounded-md cursor-pointer"></span>`
-              : `<span><i class="fa-solid fa-check border-2 rounded border-neutral-600 text-xs p-1"></i></span>`
+              ? `<span id="check" class="w-[10%] h-5 border-2 border-gray-400 rounded-md cursor-pointer check-list"></span>`
+              : `<span><i class="fa-solid fa-check border-2 rounded border-neutral-600 text-xs p-1 check-list"></i></span>`
           }
           <div class="w-[88%]">
           ${
@@ -112,24 +135,91 @@ const retrieve = (datas) => {
             <p class="text-neutral-500 text-xs">Lorem ipsum dolor sit amet.</p>
             <span class="text-neutral-400 text-xs">may 2</span></del>`
               : `<h3 class="font-semibold text-sm">${data.title}</h3>
-            <p class="text-neutral-500 text-xs">Lorem ipsum dolor sit amet.</p>
-            <span class="text-neutral-400 text-xs">may 2</span>`
+            <p class="text-neutral-500 text-xs">${data.content}</p>
+            <span class="text-neutral-400 text-xs">${
+              monthNames[date.getMonth()]
+            }, ${date.getDate()}</span>`
           }
           </div>
+          <span class="cursor-pointer"><i class="fa-solid fa-trash del-list"></i></span>
           </div>
         `;
   });
 };
 
-// filter completed todos
-function removeCompleted() {
-  console.log("hello completed");
-
-  todoList.filter((todo) => {
-    todo.completed === true;
-    console.log(todo);
-  });
+// delete request
+function deleteTodo(todo) {
+  fetch(`http://localhost:3000/todos/${todo.id}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      userId: todo.userId,
+      id: todo.id,
+      title: todo.title,
+      completed: todo.completed,
+    }),
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      retrieve(data);
+    });
 }
+
+// filter todos
+let allTask = document.getElementById("all-task");
+let completed = document.getElementById("completed");
+let incomplete = document.getElementById("incomplete");
+window.onload = function () {
+  allTask.classList.add("bg-white", "rounded-2xl", "px-2", "py-5");
+};
+completed.addEventListener("click", function () {
+  allTask.classList.remove("bg-white", "rounded-2xl", "px-2", "py-5");
+  completed.classList.add("bg-white", "rounded-2xl", "px-2", "py-5");
+  incomplete.classList.remove("bg-white", "rounded-2xl", "px-2", "py-5");
+  sideBar.classList.add("hidden"); // hide the side bar
+  todoListApp.innerHTML = ""; // clear the todo list
+  todoList.map((todo) => {
+    if (todo.completed) {
+      retrieve([todo]);
+    }
+  });
+});
+incomplete.addEventListener("click", function () {
+  allTask.classList.remove("bg-white", "rounded-2xl", "px-2", "py-5");
+  completed.classList.remove("bg-white", "rounded-2xl", "px-2", "py-5");
+  incomplete.classList.add("bg-white", "rounded-2xl", "px-2", "py-5");
+  sideBar.classList.add("hidden"); // hide the side bar
+  todoListApp.innerHTML = ""; // clear the todo list
+  todoList.map((todo) => {
+    if (!todo.completed) {
+      retrieve([todo]);
+    }
+  });
+});
+allTask.addEventListener("click", function () {
+  allTask.classList.add("bg-white", "rounded-2xl", "px-2", "py-5");
+  completed.classList.remove("bg-white", "rounded-2xl", "px-2", "py-5");
+  incomplete.classList.remove("bg-white", "rounded-2xl", "px-2", "py-5");
+  sideBar.classList.add("hidden"); // hide the side bar
+  todoListApp.innerHTML = ""; // clear the todo list
+  todoList.map((todo) => {
+    retrieve([todo]);
+  });
+});
+
+// filter todos using search bar
+let search = document.getElementById("search");
+search.addEventListener("keyup", function () {
+  let searchValue = search.value.toLowerCase(); // get the value of the search bar
+  todoListApp.innerHTML = ""; // clear the todo list
+  todoList.map((todo) => {
+    if (todo.title.toLowerCase().includes(searchValue)) {
+      retrieve([todo]); // display the todos that match the search value
+    }
+  });
+});
 
 // add a new list
 function createNote(title, content, completed) {
@@ -161,6 +251,10 @@ modalBackdrop.addEventListener("click", function (event) {
 let create = document.getElementById("create-note");
 let noteTitle = document.getElementById("note-title");
 let textArea = document.getElementById("text-area");
+let timeCreated = document.querySelector(".timeCreated");
+timeCreated.textContent = `${date.getDate()} ${
+  monthNames[date.getMonth()]
+} ${date.getHours()}:${date.getMinutes()} `; // get the current date
 create.addEventListener("click", function () {
   if (noteTitle.value !== "" || textArea.value !== "") {
     createNote(noteTitle.value, textArea.value, false);

@@ -1,77 +1,26 @@
 {
   "todos": [
     {
-      "userId": 1,
-      "id": "1",
-      "title": "delectus aut autem",
-      "completed": true
-    },
-    {
-      "userId": 1,
-      "id": "2",
-      "title": "quis ut nam facilis et officia qui",
-      "completed": true
-    },
-    {
-      "userId": 1,
-      "id": "3",
-      "title": "fugiat veniam minus",
-      "completed": true
-    },
-    {
-      "userId": 1,
-      "id": "4",
-      "title": "et porro tempora",
-      "completed": true
-    },
-    {
-      "userId": 1,
-      "id": "5",
-      "title": "laboriosam mollitia et enim quasi adipisci quia provident illum",
-      "completed": true
-    },
-    {
-      "userId": 1,
-      "id": "6",
-      "title": "qui ullam ratione quibusdam voluptatem quia omnis",
-      "completed": true
-    },
-    {
-      "id": "bd97",
-      "title": "Josh list",
-      "completed": true
-    },
-    {
-      "id": "ae2b",
-      "title": "new items",
-      "completed": true
-    },
-    {
-      "id": "9861",
-      "title": "todays work",
-      "content": "take out the garbage",
-      "completed": false
-    },
-    {
-      "id": "8e60",
-      "title": "ask of it",
+      "id": "affe",
+      "title": "yesterday",
       "content": "go to church",
       "completed": false
     },
     {
-      "id": "e977",
-      "title": "finish my do list app",
+      "id": "4e78",
+      "title": "tomorrow ",
       "completed": true
     },
     {
-      "id": "9b81",
-      "title": "josh list",
-      "completed": true
+      "id": "793e",
+      "title": "on 7th",
+      "content": "attend a conference\n",
+      "completed": false
     },
     {
-      "id": "e8d9",
-      "title": "josh",
-      "content": "go to work",
+      "id": "9665",
+      "title": "9th may",
+      "content": "attend the curve interview",
       "completed": false
     }
   ]
