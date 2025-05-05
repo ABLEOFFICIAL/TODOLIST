@@ -1,3 +1,6 @@
+const apiUrl = window.APP_CONFIG.API_URL;
+console.log(apiUrl);
+
 // toggle side bar
 const sideBarBtn = document.getElementById("side-bar-btn");
 const sideBar = document.getElementById("side-bar");
@@ -53,7 +56,7 @@ let completedTodos;
 
 // fetch data
 const fetchData = () => {
-  fetch("http://localhost:3000/todos")
+  fetch(`${apiUrl}/todos`)
     .then((res) => res.json())
     .then((data) => {
       todoList = data;
@@ -82,7 +85,7 @@ todoListApp.addEventListener("click", function (e) {
 });
 
 function updateList(todo) {
-  fetch(`http://localhost:3000/todos/${todo.id}`, {
+  fetch(`${apiUrl}/todos/${todo.id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -148,7 +151,7 @@ const retrieve = (datas) => {
 
 // delete request
 function deleteTodo(todo) {
-  fetch(`http://localhost:3000/todos/${todo.id}`, {
+  fetch(`${apiUrl}/todos/${todo.id}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
@@ -257,7 +260,7 @@ timeCreated.textContent = `${date.getDate()} ${
 create.addEventListener("click", function () {
   if (noteTitle.value !== "" || textArea.value !== "") {
     createNote(noteTitle.value, textArea.value, false);
-    fetch("http://localhost:3000/todos", {
+    fetch(`${apiUrl}/todos`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -270,7 +273,10 @@ create.addEventListener("click", function () {
     })
       .then((res) => res.json())
 
-      .then((data) => console.log("POST: ", data));
+      .then((data) => {
+        fetchData();
+        console.log("POST: ", data);
+      });
   }
   noteTitle.value = "";
   textArea.value = ""; // clear the input fields
